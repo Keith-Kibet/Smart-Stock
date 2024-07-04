@@ -32,21 +32,19 @@ def main():
         st.dataframe(stock_data[ticker])
     
     # Check if data is not empty
-    if any(data['Close'].empty for data in stock_data.values()):
+    if any(data.empty for data in stock_data.values()):
         st.error("No data available for normalization.")
         return
 
-    # Normalization
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    closing_prices = {ticker: data['Close'].values.reshape(-1, 1) for ticker, data in stock_data.items()}
-    stock_data_scaled = {ticker: scaler.fit_transform(prices) for ticker, prices in closing_prices.items()}
+    # Variable selection for visualization
+    variable_to_plot = st.selectbox("Select Variable to Visualize", ['Open', 'High', 'Low', 'Close'])
 
-    # Visualization of stock data
+    # Visualization of selected variable
     fig = go.Figure()
     for ticker in tickers:
-        fig.add_trace(go.Scatter(x=stock_data[ticker].index, y=stock_data[ticker]['Close'], mode='lines', name=ticker))
+        fig.add_trace(go.Scatter(x=stock_data[ticker].index, y=stock_data[ticker][variable_to_plot], mode='lines', name=f"{ticker} {variable_to_plot}"))
     
-    fig.update_layout(title="Stock Prices Over Time", xaxis_title='Date', yaxis_title='Price')
+    fig.update_layout(title=f"{variable_to_plot} Prices Over Time", xaxis_title='Date', yaxis_title='Price')
     st.plotly_chart(fig)
 
 if __name__ == "__main__":
