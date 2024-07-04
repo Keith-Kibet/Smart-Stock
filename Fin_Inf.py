@@ -2,14 +2,6 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 import numpy as np
-import os
-
-def save_to_csv(data, filename):
-    if not os.path.exists('data'):
-        os.makedirs('data')
-    file_path = os.path.join('data', filename)
-    data.to_csv(file_path)
-    return file_path
 
 def main():
     st.subheader('Stock Data Dashboard')
@@ -33,9 +25,6 @@ def main():
                     financial_data.index = financial_data.index.date
                 st.dataframe(financial_data.style.format("{:,.2f}"))
 
-                # Save data to CSV
-                file_path = save_to_csv(financial_data, f'{selected_stock}_{selected_function}.csv')
-                
             else:
                 st.warning(f"No {selected_function} data available for {selected_stock}")
 
@@ -53,24 +42,18 @@ def main():
                 if isinstance(hist.index, pd.DatetimeIndex):
                     hist.index = hist.index.date  # Convert index to datetime and format to date only if applicable
                 st.dataframe(hist.T.style.format("{:,.2f}"))  # Transpose back to original orientation before displaying
-                file_path = save_to_csv(hist.T, f'{selected_stock}_{selected_time_series_type}.csv')
-                st.write(f'Data saved to {file_path}')
 
             elif selected_time_series_type == 'Dividends':
                 dividends = stock.dividends.to_frame().T  # Transpose the DataFrame
                 if isinstance(dividends.index, pd.DatetimeIndex):
                     dividends.index = dividends.index.date  # Convert index to datetime and format to date only if applicable
                 st.dataframe(dividends.T.style.format("{:,.2f}"))  # Transpose back to original orientation before displaying
-                file_path = save_to_csv(dividends.T, f'{selected_stock}_{selected_time_series_type}.csv')
-                st.write(f'Data saved to {file_path}')
 
             elif selected_time_series_type == 'Splits':
                 splits = stock.splits.to_frame().T  # Transpose the DataFrame
                 if isinstance(splits.index, pd.DatetimeIndex):
                     splits.index = splits.index.date  # Convert index to datetime and format to date only if applicable
                 st.dataframe(splits.T.style.format("{:,.2f}"))  # Transpose back to original orientation before displaying
-                file_path = save_to_csv(splits.T, f'{selected_stock}_{selected_time_series_type}.csv')
-                st.write(f'Data saved to {file_path}')
 
             elif selected_time_series_type == 'Returns':
                 hist = stock.history(period="1y")
@@ -83,8 +66,6 @@ def main():
                     st.write(f"Average Annual Return: {average_return:.2%}")
                     st.write(f"Annual Volatility: {volatility:.2%}")
                     st.dataframe(hist[['Close', 'Simple Return', 'Log Return']].dropna().style.format({"Close": "{:,.2f}", "Simple Return": "{:.2%}", "Log Return": "{:.2%}"}))
-                    file_path = save_to_csv(hist[['Close', 'Simple Return', 'Log Return']].dropna(), f'{selected_stock}_{selected_time_series_type}.csv')
-                    
 
 if __name__ == "__main__":
     main()
