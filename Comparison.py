@@ -44,7 +44,20 @@ def main():
     for ticker in tickers:
         fig.add_trace(go.Scatter(x=stock_data[ticker].index, y=stock_data[ticker][variable_to_plot], mode='lines', name=f"{ticker} {variable_to_plot}"))
     
-    fig.update_layout(title=f"{variable_to_plot} Prices Over Time", xaxis_title='Date', yaxis_title='Price')
+    fig.update_layout(
+        title=f"{variable_to_plot} Prices Over Time",
+        xaxis_title='Date',
+        yaxis_title='Price',
+        xaxis=dict(showline=True, showgrid=False),  # Customize axis appearance
+        yaxis=dict(showline=True, showgrid=False),
+        plot_bgcolor='white',  # Set background color
+        paper_bgcolor='white',  # Set border and background color
+        margin=dict(l=50, r=50, t=80, b=50),  # Adjust margins
+        hovermode='x'  # Set hovermode
+    )
+    
+    fig.update_xaxes(showspikes=True)  # Enable spikes on x-axis
+    
     st.plotly_chart(fig)
 
 if __name__ == "__main__":
