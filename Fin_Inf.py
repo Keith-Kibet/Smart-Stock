@@ -3,19 +3,10 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 
-def calculate_risk_score(stock_ticker):
-    stock = yf.Ticker(stock_ticker)
-    hist = stock.history(period="1y")
-    if hist is not None:
-        hist['Simple Return'] = hist['Close'].pct_change()
-        volatility = hist['Simple Return'].std() * np.sqrt(252)  # Annualized volatility
-        return volatility
-    return None
-
 def main():
     st.subheader('Stock Data Dashboard')
 
-    selected_data_type = st.selectbox('Select Data Type', ['Financial Statements', 'Time Series Data', 'Risk Scoring & Ranking'])
+    selected_data_type = st.selectbox('Select Data Type', ['Financial Statements', 'Time Series Data'])
 
     if selected_data_type == 'Financial Statements':
         st.subheader('Explore Financial Statements')
@@ -75,21 +66,6 @@ def main():
                     st.write(f"Average Annual Return: {average_return:.2%}")
                     st.write(f"Annual Volatility: {volatility:.2%}")
                     st.dataframe(hist[['Close', 'Simple Return', 'Log Return']].dropna().style.format({"Close": "{:,.2f}", "Simple Return": "{:.2%}", "Log Return": "{:.2%}"}))
-    
-    elif selected_data_type == 'Risk Scoring & Ranking':
-        st.subheader('Risk Scoring & Ranking of Stocks')
-        stock_list = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX']
-        risk_scores = {}
-
-        for stock in stock_list:
-            risk_score = calculate_risk_score(stock)
-            if risk_score is not None:
-                risk_scores[stock] = risk_score
-
-        if risk_scores:
-            risk_scores_df = pd.DataFrame.from_dict(risk_scores, orient='index', columns=['Annualized Volatility'])
-            risk_scores_df.sort_values(by='Annualized Volatility', inplace=True)
-            st.dataframe(risk_scores_df.style.format("{:.2%}"))
 
 if __name__ == "__main__":
     main()

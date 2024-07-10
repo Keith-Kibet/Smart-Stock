@@ -16,13 +16,13 @@ def calculate_risk_metrics(stock_ticker, risk_free_rate=0.01, confidence_level=0
         # VaR Calculation
         sorted_returns = hist['Simple Return'].dropna().sort_values()
         var_index = int((1 - confidence_level) * len(sorted_returns))
-        var = sorted_returns.iloc[var_index] * np.sqrt(252)  # Annualized VaR
+        var = sorted_returns.iloc[var_index] * np.sqrt(252) if var_index < len(sorted_returns) else np.nan  # Annualized VaR
         
         return volatility, beta, sharpe_ratio, var
     return None, None, None, None
 
 def main():
-    st.subheader('Stock Risk Scoring & Ranking')
+    st.subheader('Stock Risk Metrics Visualization')
 
     # List of stocks to evaluate
     stock_list = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX']
@@ -51,7 +51,15 @@ def main():
             "Value at Risk (VaR)": "{:.2%}"
         }))
         
-        st.bar_chart(risk_metrics_df[['Volatility', 'Beta', 'Sharpe Ratio', 'Value at Risk (VaR)']])
+        # Allow user to select which metrics to visualize
+        selected_metrics = st.multiselect(
+            'Select Metrics to Visualize',
+            ['Volatility', 'Beta', 'Sharpe Ratio', 'Value at Risk (VaR)'],
+            default=['Volatility', 'Beta', 'Sharpe Ratio', 'Value at Risk (VaR)']
+        )
+        
+        if selected_metrics:
+            st.bar_chart(risk_metrics_df[selected_metrics])
 
 if __name__ == "__main__":
     main()
