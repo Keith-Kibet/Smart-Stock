@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pandas as pd
 from datetime import datetime, timedelta
-import plotly.express as px
 import plotly.graph_objects as go
 
 # Function to fetch news table for a given ticker
@@ -74,7 +73,7 @@ if df is not None:
     # Display average sentiment scores for the past week as a DataFrame
     st.subheader("Average Sentiment Scores for the Past 60 Days")
     st.write(daily_sentiment)
-    
+
     # Plotting the average sentiment score as a smooth, wavy line chart
     st.subheader("Average Sentiment Score Over Time")
     fig = go.Figure()
@@ -88,3 +87,8 @@ if df is not None:
     st.plotly_chart(fig)
 else:
     st.error("Failed to fetch news table for the selected ticker.")
+
+    # Display URLs as clickable links
+st.subheader("News Article URLs")
+for index, row in df.iterrows():
+    st.markdown(f"[{row['title']}]({row['url']})")
