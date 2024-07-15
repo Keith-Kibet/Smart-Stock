@@ -47,7 +47,6 @@ def plot_income_statement(data):
         if 'Interest Income' in data.columns:
             st.area_chart(data['Interest Income'], 
                           use_container_width=True)
-
     else:
         st.warning(f"No Income Statement data available for selected stock")
 
