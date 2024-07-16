@@ -67,7 +67,7 @@ def plot_income_statement(data):
         with col4:
             if 'Total Revenue' in data.columns:
                 fig = go.Figure()
-                fig.add_trace(go.Scatter(x=data.index, y=data['Total Revenue'], mode='lines', fill='tozeroy', name='Interest Income'))
+                fig.add_trace(go.Scatter(x=data.index, y=data['Total Revenue'], mode='lines', fill='tozeroy', name='Total Revenue'))
                 fig.update_layout(title='Total Revenue Over Time')
                 st.plotly_chart(fig, use_container_width=True)
 
@@ -100,7 +100,7 @@ def plot_balance_sheet(data):
 
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=data.index, y=data['Net Debt'], mode='lines', fill='tozeroy', name='Net Debt'))
-        fig.update_layout(title='Net Income Over Time')
+        fig.update_layout(title='Net Debt Over Time')
         st.plotly_chart(fig, use_container_width=True)
 
         if 'Interest Income' in data.columns:
