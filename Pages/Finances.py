@@ -4,12 +4,10 @@ import pandas as pd
 import numpy as np
 
 def main():
-    st.subheader('Stock Data Dashboard')
-
+    st.subheader('Explore Financial Statements')
     selected_data_type = st.selectbox('Select Data Type', ['Financial Statements', 'Time Series Data'])
 
     if selected_data_type == 'Financial Statements':
-        st.subheader('Explore Financial Statements')
         selected_function = st.selectbox('Select Financial Statement', ['get_income_stmt', 'get_balance_sheet', 'get_cashflow'])
         selected_stock = st.selectbox('Select Stock', ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX'])
         

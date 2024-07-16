@@ -4,6 +4,25 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
+from pages import Comparison, Finances, News, Prediction, Risk, Technical_Indicators
+
+# Page selection
+page = st.sidebar.selectbox("Select a page", ["Comparison", "Finances", "News", "Prediction", "Risk", "Technical_Indicators"])
+
+# Display selected page
+if page == "Comparison":
+    Comparison.app()
+elif page == "Finances":
+    Finances.app()
+elif page == "News":
+    News.app()
+if page == "Prediction":
+    Prediction.app()
+elif page == "Risk":
+    Risk.app()
+elif page == "Technical_Indicators":
+    Technical_Indicators.app()
+
 def main():
     st.set_page_config(page_title='Stock Data Dashboard', layout='wide')
     st.markdown("<h1 style='text-align: center;'>📈 Stock Data Dashboard</h1>", unsafe_allow_html=True)
