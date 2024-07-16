@@ -1,3 +1,5 @@
+# News.py
+
 import streamlit as st
 import nltk
 from urllib.request import urlopen, Request
@@ -55,40 +57,46 @@ def sentiment_analysis_weekly(df):
     daily_sentiment.columns = ['Date', 'Average Sentiment Score']
     return daily_sentiment
 
-# Streamlit app
-st.header("Financial News")
+# Main function for the News page
+def main():
+    st.header("Financial News")
 
-# Ticker selection
-ticker = st.selectbox("Select Ticker", ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX', 'NIO', 'SIRI', 'GOLD'])
+    # Ticker selection
+    ticker = st.selectbox("Select Ticker", ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX', 'NIO', 'SIRI', 'GOLD'])
 
-# Update DataFrame based on selected ticker
-df = update_df(ticker)
-if df is not None:
-    # Display DataFrame
-    st.write(df)
+    # Update DataFrame based on selected ticker
+    df = update_df(ticker)
+    if df is not None:
+        # Display DataFrame
+        st.write(df)
 
-    # Perform weekly sentiment analysis
-    daily_sentiment = sentiment_analysis_weekly(df)
-    
-    # Display average sentiment scores for the past week as a DataFrame
-    st.subheader("Average Sentiment Scores for the Past 60 Days")
-    st.write(daily_sentiment)
+        # Perform weekly sentiment analysis
+        daily_sentiment = sentiment_analysis_weekly(df)
+        
+        # Display average sentiment scores for the past week as a DataFrame
+        st.subheader("Average Sentiment Scores for the Past 60 Days")
+        st.write(daily_sentiment)
 
-    # Plotting the average sentiment score as a smooth, wavy line chart
-    st.subheader("Average Sentiment Score Over Time")
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=daily_sentiment['Date'], y=daily_sentiment['Average Sentiment Score'],
-                             mode='lines+markers',
-                             line_shape='spline',
-                             name='Average Sentiment Score'))
-    fig.update_layout(title=f'Average Sentiment Score for {ticker}',
-                      xaxis_title='Date',
-                      yaxis_title='Average Sentiment Score')
-    st.plotly_chart(fig)
-else:
-    st.error("Failed to fetch news table for the selected ticker.")
+        # Plotting the average sentiment score as a smooth, wavy line chart
+        st.subheader("Average Sentiment Score Over Time")
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=daily_sentiment['Date'], y=daily_sentiment['Average Sentiment Score'],
+                                 mode='lines+markers',
+                                 line_shape='spline',
+                                 name='Average Sentiment Score'))
+        fig.update_layout(title=f'Average Sentiment Score for {ticker}',
+                          xaxis_title='Date',
+                          yaxis_title='Average Sentiment Score')
+        st.plotly_chart(fig)
+    else:
+        st.error("Failed to fetch news table for the selected ticker.")
 
     # Display URLs as clickable links
-st.subheader("News Article URLs")
-for index, row in df.iterrows():
-    st.markdown(f"[{row['title']}]({row['url']})")
+    if df is not None:
+        st.subheader("News Article URLs")
+        for index, row in df.iterrows():
+            st.markdown(f"[{row['title']}]({row['url']})")
+
+# Ensure main() is called when running News.py directly
+if __name__ == "__main__":
+    main()

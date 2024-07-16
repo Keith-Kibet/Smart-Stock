@@ -1,38 +1,18 @@
 import streamlit as st
 import yfinance as yf
-import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
-
-from pages import Comparison, Finances, News, Prediction, Risk, Technical_Indicators
 
 def main():
     st.set_page_config(page_title='Stock Data Dashboard', layout='wide')
     st.markdown("<h1 style='text-align: center;'>📈 Stock Data Dashboard</h1>", unsafe_allow_html=True)
 
-    st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox("Select a page", ["Comparison", "Finances", "News", "Prediction", "Risk", "Technical Indicators"])
-
-    if page == "Comparison":
-        Comparison.app()
-    elif page == "Finances":
-        Finances.app()
-    elif page == "News":
-        News.app()
-    elif page == "Prediction":
-        Prediction.app()
-    elif page == "Risk":
-        Risk.app()
-    elif page == "Technical Indicators":
-        Technical_Indicators.app()
-
     st.header('Select Options')
     col1, col2 = st.columns(2)
     
     with col1:
-        selected_function = st.selectbox('Statement Type', ['Income Statement', 'Balance Sheet', 'Cash Flow'])
+        selected_function = st.selectbox('Statement Type', ['Income Statement', 'Balance Sheet', 'Cash Flow'], key='statement_type')
     with col2:
-        selected_stock = st.selectbox('Select Stock', ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX'])
+        selected_stock = st.selectbox('Select Stock', ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX'], key='select_stock')
 
     if selected_stock:
         st.write(f"{selected_stock} Data")
@@ -112,7 +92,7 @@ def plot_balance_sheet(data):
             st.write('Long vs Short term debt')
             long_term = data['Long Term Debt'].iloc[-1]
             short_debt = (data['Total Debt'] - long_term).iloc[-1]
-            labels = ['Long Term', 'Short_Term']
+            labels = ['Long Term', 'Short Term']
             values = [long_term, short_debt]
             fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.3)])
             fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
@@ -129,7 +109,7 @@ def plot_balance_sheet(data):
             fig.update_layout(title='Interest Income Over Time')
             st.plotly_chart(fig, use_container_width=True)
     else:
-        st.warning(f"No Income Statement data available for selected stock")
+        st.warning(f"No Balance Sheet data available for selected stock")
 
 def plot_cash_flow(data):
     if data is not None and not data.empty:
