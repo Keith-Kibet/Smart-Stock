@@ -6,26 +6,25 @@ import plotly.graph_objects as go
 
 from pages import Comparison, Finances, News, Prediction, Risk, Technical_Indicators
 
-# Page selection
-page = st.sidebar.selectbox("Select a page", ["Comparison", "Finances", "News", "Prediction", "Risk", "Technical_Indicators"])
-
-# Display selected page
-if page == "Comparison":
-    Comparison.app()
-elif page == "Finances":
-    Finances.app()
-elif page == "News":
-    News.app()
-if page == "Prediction":
-    Prediction.app()
-elif page == "Risk":
-    Risk.app()
-elif page == "Technical_Indicators":
-    Technical_Indicators.app()
-
 def main():
     st.set_page_config(page_title='Stock Data Dashboard', layout='wide')
     st.markdown("<h1 style='text-align: center;'>📈 Stock Data Dashboard</h1>", unsafe_allow_html=True)
+
+    st.sidebar.title("Navigation")
+    page = st.sidebar.selectbox("Select a page", ["Comparison", "Finances", "News", "Prediction", "Risk", "Technical Indicators"])
+
+    if page == "Comparison":
+        Comparison.app()
+    elif page == "Finances":
+        Finances.app()
+    elif page == "News":
+        News.app()
+    elif page == "Prediction":
+        Prediction.app()
+    elif page == "Risk":
+        Risk.app()
+    elif page == "Technical Indicators":
+        Technical_Indicators.app()
 
     st.header('Select Options')
     col1, col2 = st.columns(2)
@@ -55,9 +54,8 @@ def plot_income_statement(data):
     if data is not None and not data.empty:
         st.dataframe(data.style.format("{:,.2f}"))
 
-        # Summary cards with pie charts for Revenue vs Expenses
         st.subheader('Summary')
-        col1, col2, = st.columns(2)
+        col1, col2 = st.columns(2)
 
         with col1:
             st.write('Revenue vs Expenses')
@@ -78,8 +76,7 @@ def plot_income_statement(data):
             fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
             st.plotly_chart(fig, use_container_width=True)
 
-        # Line chart of Net Income
-        col3, col4, = st.columns(2)
+        col3, col4 = st.columns(2)
 
         with col3:
             fig = go.Figure()
@@ -87,7 +84,6 @@ def plot_income_statement(data):
             fig.update_layout(title='Net Income Over Time')
             st.plotly_chart(fig, use_container_width=True)
 
-        # Area chart of Interest Income
         with col4:
             if 'Total Revenue' in data.columns:
                 fig = go.Figure()
@@ -101,7 +97,6 @@ def plot_balance_sheet(data):
         st.dataframe(data.style.format("{:,.2f}"))
 
         st.subheader("Summary")
-
         col1, col2 = st.columns(2)
         with col1:
             st.write('Total Assets vs Liabilities')
@@ -116,20 +111,18 @@ def plot_balance_sheet(data):
         with col2:
             st.write('Long vs Short term debt')
             long_term = data['Long Term Debt'].iloc[-1]
-            short_debt = (data['Total Debt'] - long_term) .iloc[-1]
+            short_debt = (data['Total Debt'] - long_term).iloc[-1]
             labels = ['Long Term', 'Short_Term']
             values = [long_term, short_debt]
             fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.3)])
             fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
             st.plotly_chart(fig, use_container_width=True)
 
-        # Line chart of Net Income
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=data.index, y=data['Net Debt'], mode='lines', fill='tozeroy', name='Net Debt'))
         fig.update_layout(title='Net Income Over Time')
         st.plotly_chart(fig, use_container_width=True)
 
-        # Area chart of Interest Income
         if 'Interest Income' in data.columns:
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=data.index, y=data['Interest Income'], mode='lines', fill='tozeroy', name='Interest Income'))
@@ -142,7 +135,6 @@ def plot_cash_flow(data):
     if data is not None and not data.empty:
         st.dataframe(data.style.format("{:,.2f}"))
 
-        # Area chart of Free Cash Flow
         if 'Free Cash Flow' in data.columns:
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=data.index, y=data['Free Cash Flow'], mode='lines', fill='tozeroy', name='Free Cash Flow'))
