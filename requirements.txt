@@ -1,9 +1,11 @@
 streamlit
-pandas
-numpy
 yfinance
-plotly
-matplotlib
+numpy
 tensorflow
-torch
+pandas
+scikit-learn
 keras
+matplotlib
+beautifulsoup4
+nltk
+plotly
