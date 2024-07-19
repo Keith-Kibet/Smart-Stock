@@ -1,5 +1,3 @@
-# News.py
-
 import streamlit as st
 import nltk
 from urllib.request import urlopen, Request
@@ -51,7 +49,7 @@ def update_df(ticker):
 # Function to filter DataFrame for the past week and calculate average sentiment scores
 def sentiment_analysis_weekly(df):
     df['date'] = pd.to_datetime(df['date'], format='%b-%d-%y')
-    last_week = datetime.now() - timedelta(days=60)
+    last_week = datetime.now() - timedelta(days=7)  # Changed to past 7 days
     df_last_week = df[df['date'] >= last_week]
     daily_sentiment = df_last_week.groupby(df_last_week['date'].dt.date)['Sent_Score'].mean().reset_index()
     daily_sentiment.columns = ['Date', 'Average Sentiment Score']
@@ -74,10 +72,10 @@ def main():
         daily_sentiment = sentiment_analysis_weekly(df)
         
         # Display average sentiment scores for the past week as a DataFrame
-        st.subheader("Average Sentiment Scores for the Past 60 Days")
+        st.subheader("Average Sentiment Scores for the Past 7 Days")
         st.write(daily_sentiment)
 
-        # Plotting the average sentiment score as a smooth, wavy line chart
+        # Plotting the average sentiment score over time
         st.subheader("Average Sentiment Score Over Time")
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=daily_sentiment['Date'], y=daily_sentiment['Average Sentiment Score'],
@@ -88,14 +86,14 @@ def main():
                           xaxis_title='Date',
                           yaxis_title='Average Sentiment Score')
         st.plotly_chart(fig)
-    else:
-        st.error("Failed to fetch news table for the selected ticker.")
 
-    # Display URLs as clickable links
-    if df is not None:
+        # Display URLs as clickable links
         st.subheader("News Article URLs")
         for index, row in df.iterrows():
             st.markdown(f"[{row['title']}]({row['url']})")
+
+    else:
+        st.error("Failed to fetch news table for the selected ticker.")
 
 # Ensure main() is called when running News.py directly
 if __name__ == "__main__":

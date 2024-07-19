@@ -1,8 +1,5 @@
 import streamlit as st
 import yfinance as yf
-import numpy as np
-from sklearn.preprocessing import MinMaxScaler
-import pandas as pd
 import plotly.graph_objects as go
 from datetime import date
 
@@ -12,7 +9,7 @@ def main():
 
     # Custom Date Range Selector
     start_date = st.date_input("Choose a Start Date", value=date(2020, 1, 1))
-    end_date = st.date_input("Choose a End Date", value=date.today())
+    end_date = st.date_input("Choose an End Date", value=date.today())
 
     # Select stock ticker(s)
     tickers = st.multiselect("Select Ticker(s)", ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX'], default=['AAPL'])
