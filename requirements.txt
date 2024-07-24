@@ -1,6 +1,13 @@
 streamlit
-pandas
-numpy
 yfinance
-plotly
+numpy
+tensorflow
+pandas
+scikit-learn
+keras
 matplotlib
+beautifulsoup4
+nltk
+plotly
+pystan
+prophet

@@ -23,11 +23,6 @@ def main():
     for ticker in tickers:
         stock_data[ticker] = yf.download(ticker, start=start_date, end=end_date)
     
-    # Display stock data
-    for ticker in tickers:
-        st.write(f"{ticker} Stock Data")
-        st.dataframe(stock_data[ticker])
-    
     # Check if data is not empty
     if any(data.empty for data in stock_data.values()):
         st.error("No data available for normalization.")
