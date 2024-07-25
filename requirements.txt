@@ -6,3 +6,5 @@ pandas
 scikit-learn
 keras
 matplotlib
+streamlit_option_menu
+bcrypt
