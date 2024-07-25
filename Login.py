@@ -44,7 +44,7 @@ def main():
                 index = usernames.index(username)
                 if bcrypt.checkpw(password.encode('utf-8'), hashed_passwords[index].encode('utf-8')):
                     st.session_state.logged_in = True
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     st.error("Incorrect password")
             else:
