@@ -8,6 +8,7 @@ import Risk
 import Finances
 import Technical_Indicators
 import login  # Import the login module
+import chat
 
 # Set page configuration once at the top of the main script
 st.set_page_config(
@@ -40,8 +41,8 @@ class MultiApp:
 
             selected_page = option_menu(
                 menu_title="Smart Foresight",
-                options=['Home', 'News', 'Comparison', 'Prediction', 'Risk', 'Finances', 'Technical Indicators'],
-                icons=['house-fill', 'newspaper', 'columns-gap', 'graph-up-arrow', 'shield-shaded', 'currency-exchange', 'card-checklist'],
+                options=['Home', 'News', 'Comparison', 'Prediction', 'Risk', 'Finances', 'Technical Indicators', 'Chat'],
+                icons=['house-fill', 'newspaper', 'columns-gap', 'graph-up-arrow', 'shield-shaded', 'currency-exchange', 'card-checklist', 'chat-dots'],
                 menu_icon='menu-button-wide',
                 default_index=0,
                 styles={
@@ -67,6 +68,8 @@ class MultiApp:
             Finances.main()
         elif selected_page == 'Technical Indicators':
             Technical_Indicators.main()
+        elif selected_page == 'Chat':
+            chat.main()
 
 if __name__ == "__main__":
     multi_app = MultiApp()
