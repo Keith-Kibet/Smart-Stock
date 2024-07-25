@@ -7,11 +7,12 @@ import Prediction
 import Risk
 import Finances
 import Technical_Indicators
+import login  # Import the login module
 
 # Set page configuration once at the top of the main script
 st.set_page_config(
     page_title="SMART FORESIGHT",
-    layout="wide"  # Optional: You can specify layout as 'wide' if needed
+    layout="wide"
 )
 
 class MultiApp:
@@ -26,9 +27,18 @@ class MultiApp:
         })
 
     def run(self):
-        # Use st.sidebar for navigation menu only
+        # Show login page if not logged in
+        if "logged_in" not in st.session_state or not st.session_state.logged_in:
+            login.main()
+            return
+
+        # Show logout button in sidebar
         with st.sidebar:
-            app = option_menu(
+            if st.button("Logout"):
+                st.session_state.logged_in = False
+                st.experimental_rerun()  # Reload to show login page
+
+            selected_page = option_menu(
                 menu_title="Smart Foresight",
                 options=['Home', 'News', 'Comparison', 'Prediction', 'Risk', 'Finances', 'Technical Indicators'],
                 icons=['house-fill', 'newspaper', 'columns-gap', 'graph-up-arrow', 'shield-shaded', 'currency-exchange', 'card-checklist'],
@@ -41,21 +51,21 @@ class MultiApp:
                     "nav-link-selected": {"background-color": "#02ab21"},
                 }
             )
-            
-        # Display the selected page
-        if app == 'Home':
+
+        # Display the selected page's content
+        if selected_page == 'Home':
             Home.main()
-        elif app == 'News':
+        elif selected_page == 'News':
             News.main()
-        elif app == 'Comparison':
+        elif selected_page == 'Comparison':
             Comparison.main()
-        elif app == 'Prediction':
+        elif selected_page == 'Prediction':
             Prediction.main()
-        elif app == 'Risk':
+        elif selected_page == 'Risk':
             Risk.main()
-        elif app == 'Finances':
+        elif selected_page == 'Finances':
             Finances.main()
-        elif app == 'Technical Indicators':
+        elif selected_page == 'Technical Indicators':
             Technical_Indicators.main()
 
 if __name__ == "__main__":

@@ -10,9 +10,7 @@ def load_passwords():
         names, usernames, hashed_passwords = pickle.load(file)
     return names, usernames, hashed_passwords
 
-# Main function for the login page
 def main():
-    st.set_page_config(page_title="Login", layout="wide")
     st.markdown("<h1 style='text-align: center;'>📈 Stock Data Login</h1>", unsafe_allow_html=True)
     
     if "logged_in" not in st.session_state:
@@ -37,6 +35,3 @@ def main():
                 st.error("Incorrect password")
         else:
             st.error("Username not found")
-
-if __name__ == "__main__":
-    main()

@@ -40,10 +40,11 @@ def main():
         title=f"{variable_to_plot} Prices Over Time",
         xaxis_title='Date',
         yaxis_title='Price',
-        xaxis=dict(showline=True, showgrid=False),  # Customize axis appearance
-        yaxis=dict(showline=True, showgrid=False),
-        plot_bgcolor='white',  # Set background color
-        paper_bgcolor='white',  # Set border and background color
+        xaxis=dict(showline=True, showgrid=False, linecolor='white', gridcolor='grey'),  # Customize axis appearance
+        yaxis=dict(showline=True, showgrid=False, linecolor='white', gridcolor='grey'),
+        plot_bgcolor='black',  # Set background color
+        paper_bgcolor='black',  # Set border and background color
+        font=dict(color='white'),  # Set font color
         margin=dict(l=50, r=50, t=80, b=50),  # Adjust margins
         hovermode='x'  # Set hovermode
     )
