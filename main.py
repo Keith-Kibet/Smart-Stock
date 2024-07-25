@@ -7,7 +7,7 @@ import Prediction
 import Risk
 import Finances
 import Technical_Indicators
-import login  # Import the login module
+import Login  # Import the login module
 import chat
 
 # Set page configuration once at the top of the main script
@@ -30,18 +30,18 @@ class MultiApp:
     def run(self):
         # Show login page if not logged in
         if "logged_in" not in st.session_state or not st.session_state.logged_in:
-            login.main()
+            Login.main()
             return
 
         # Show logout button in sidebar
         with st.sidebar:
-            if st.button("Logout"):
-                st.session_state.logged_in = False
-                st.experimental_rerun()  # Reload to show login page
+           # if st.button("Logout"):
+             ##   st.session_state.logged_in = False
+             #   st.rerun()  # Reload to show login page
 
             selected_page = option_menu(
                 menu_title="Smart Foresight",
-                options=['Home', 'News', 'Comparison', 'Risk', 'Finances', 'Technical Indicators', 'Prediction', 'Chat'],
+                options=['Home', 'News', 'Comparison', 'Risk', 'Finances', 'Technical Indicators', 'Prediction', 'Chat', 'Logout'],
                 icons=['house-fill', 'newspaper', 'pie-chart', "shield-shaded", "currency-exchange", "card-checklist", 'graph-up-arrow', 'chat-dots'],
                 menu_icon='menu-button-wide',
                 default_index=0,
@@ -70,6 +70,9 @@ class MultiApp:
             Technical_Indicators.main()
         elif selected_page == 'Chat':
             chat.main()
+        elif selected_page == 'Logout':
+            st.session_state.logged_in = False
+            st.experimental_rerun()
 
 if __name__ == "__main__":
     multi_app = MultiApp()
