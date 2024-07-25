@@ -12,6 +12,8 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from sklearn.metrics import mean_absolute_error
+import plotly.graph_objects as go
+
 
 # Function to fetch news table for a given ticker
 def fetch_news_table(ticker):

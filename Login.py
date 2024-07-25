@@ -20,7 +20,7 @@ def save_passwords(names, usernames, hashed_passwords):
         pickle.dump((names, usernames, hashed_passwords), file)
 
 def main():
-    st.markdown("<h1 style='text-align: center;'>📈 Stock Data Login/Signup</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>📈 SMART FORESIGHT Login/Signup</h1>", unsafe_allow_html=True)
     
     if "logged_in" not in st.session_state:
         st.session_state.logged_in = False
