@@ -3,7 +3,6 @@ import yfinance as yf
 import plotly.graph_objects as go
 
 def main():
-    st.set_page_config(page_title='Stock Data Dashboard', layout='wide')
     st.markdown("<h1 style='text-align: center;'>📈 Stock Data Dashboard</h1>", unsafe_allow_html=True)
 
     st.header('Select Options')
@@ -122,6 +121,3 @@ def plot_cash_flow(data):
             st.plotly_chart(fig, use_container_width=True)
     else:
         st.warning(f"No Cash Flow data available for selected stock")
-
-if __name__ == "__main__":
-    main()
