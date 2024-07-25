@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 def main():
     st.markdown("<h1 style='text-align: center;'>📈 Stock Data Dashboard</h1>", unsafe_allow_html=True)
 
-    st.header('Select Options')
+    st.subheader('Select Options')
     col1, col2 = st.columns(2)
     
     with col1:

@@ -65,6 +65,7 @@ def main():
                 hashed_passwords.append(hashed_pw.decode('utf-8'))
                 save_passwords(names, usernames, hashed_passwords)
                 st.success("Signup successful! You can now log in.")
+                
 
 if __name__ == "__main__":
     main()

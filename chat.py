@@ -2,7 +2,7 @@ import streamlit as st
 from chat_data import save_message, get_messages
 
 def main():
-    st.subheader("Chat")
+    st.subheader("Forum")
 
     # User input for message
     user = st.text_input("NickName", key="user_input", placeholder="Enter your nickname")

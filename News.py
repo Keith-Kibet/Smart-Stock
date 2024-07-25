@@ -16,6 +16,16 @@ def fetch_news_table(ticker):
     html = BeautifulSoup(response, features='html.parser')
     return html.find(id='news-table')
 
+
+# Function to filter DataFrame for the past week and calculate average sentiment scores
+def sentiment_analysis_weekly(df):
+    df['date'] = pd.to_datetime(df['date'], format='%b-%d-%y')
+    last_week = datetime.now() - timedelta(days=7)  # Changed to past 7 days
+    df_last_week = df[df['date'] >= last_week]
+    daily_sentiment = df_last_week.groupby(df_last_week['date'].dt.date)['Sent_Score'].mean().reset_index()
+    daily_sentiment.columns = ['Date', 'Average Sentiment Score']
+    return daily_sentiment
+
 # Function to update DataFrame based on selected ticker
 def update_df(ticker):
     news_table = fetch_news_table(ticker)
