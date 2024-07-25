@@ -11,3 +11,5 @@ bcrypt
 plotly
 datetime
 urllib3
+ntlk
+beautifulsoup4
