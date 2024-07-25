@@ -49,6 +49,8 @@ def main():
                     st.error("Incorrect password")
             else:
                 st.error("Username not found")
+                #prompt the user to signup
+                login_signup = "Signup"
 
     elif login_signup == "Signup":
         new_username = st.text_input("New Username")
@@ -65,6 +67,9 @@ def main():
                 hashed_passwords.append(hashed_pw.decode('utf-8'))
                 save_passwords(names, usernames, hashed_passwords)
                 st.success("Signup successful! You can now log in.")
+                #change the option to login
+                login_signup = "Login"
+                
                 
 
 if __name__ == "__main__":
