@@ -6,9 +6,19 @@ import numpy as np
 def main():
     st.subheader('Explore Financial Statements')
     selected_data_type = st.selectbox('Select Data Type', ['Financial Statements', 'Time Series Data'])
+    # Define the mapping of names to function calls
+    function_mapping = {
+        'Income Statement': 'get_income_stmt',
+        'Balance Sheet': 'get_balance_sheet',
+        'Cash Flow Statement': 'get_cashflow'
+    }
 
     if selected_data_type == 'Financial Statements':
-        selected_function = st.selectbox('Select Financial Statement', ['get_income_stmt', 'get_balance_sheet', 'get_cashflow'])
+        #selected_function = st.selectbox('Select Financial Statement',  ['get_income_stmt', 'get_balance_sheet', 'get_cashflow'])
+        selected_function_Array = st.selectbox('Select Financial Statement', list(function_mapping.keys()))
+
+        selected_function = function_mapping[selected_function_Array]
+
         selected_stock = st.selectbox('Select Stock', ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX'])
         
         if selected_stock:
