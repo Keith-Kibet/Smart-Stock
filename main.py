@@ -42,7 +42,7 @@ class MultiApp:
             selected_page = option_menu(
                 menu_title="Smart Foresight",
                 options=['Home', 'News', 'Comparison', 'Prediction', 'Risk', 'Finances', 'Technical Indicators', 'Chat'],
-                icons=['house-fill', 'newspaper', 'bar-chart', 'graph-up-arrow', 'shield-shaded', 'currency-exchange', 'card-checklist', 'chat-dots'],
+                icons=['house-fill', 'newspaper', 'pie-chart', 'graph-up-arrow', 'shield-shaded', 'currency-exchange', 'card-checklist', 'chat-dots'],
                 menu_icon='menu-button-wide',
                 default_index=0,
                 styles={
