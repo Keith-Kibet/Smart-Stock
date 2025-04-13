@@ -32,7 +32,7 @@ def main():
     ticker = st.selectbox("Select Ticker", ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'NFLX'])
     
     # Fetch stock data
-    stock_data = yf.download(ticker, start='2020-01-01', end='2024-7-17')
+    stock_data = yf.download(ticker, start='2024-01-01', end='2025-02-13')
     
     if stock_data.empty:
         st.error("Failed to fetch data. Please try again later.")
